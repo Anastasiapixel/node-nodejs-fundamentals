@@ -6,9 +6,9 @@ const snapshot = async () => {
 
   try {
     const st = await fs.promises.stat(workspace);
-    if (!st.isDirectory()) throw new Error("File system error");
+    if (!st.isDirectory()) throw new Error("FS operation failed");
   } catch (err) {
-    throw new Error("File system error");
+    throw new Error("FS operation failed");
   }
 
   const entries = [];
