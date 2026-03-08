@@ -1,16 +1,16 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 
-const ROOT = 'workspace_restored';
+const root = path.join(path.resolve(), 'workspace_restored');
 const restore = async () => {
   try {
     const raw = await fs.readFile('snapshot.json', 'utf8');
     const { entries = [] } = JSON.parse(raw);
 
-    await fs.mkdir(ROOT, { recursive: true });
+    await fs.mkdir(root, { recursive: true });
 
     for (const e of entries) {
-      const p = path.join(ROOT, e.path);
+      const p = path.join(root, e.path);
 
       if (e.type === 'directory') {
         await fs.mkdir(p, { recursive: true });

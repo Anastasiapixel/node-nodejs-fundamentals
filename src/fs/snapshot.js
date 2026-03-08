@@ -2,13 +2,13 @@ import fs from 'fs';
 import path from 'path';
 
 const snapshot = async () => {
-  const workspace = path.join(process.cwd(), "workspace");
+  const workspace = path.join(process.cwd(), 'workspace');
 
   try {
     const st = await fs.promises.stat(workspace);
-    if (!st.isDirectory()) throw new Error("FS operation failed");
+    if (!st.isDirectory()) throw new Error('FS operation failed');
   } catch (err) {
-    throw new Error("FS operation failed");
+    throw new Error('FS operation failed');
   }
 
   const entries = [];
@@ -20,21 +20,21 @@ const snapshot = async () => {
       const relPath = path
         .relative(workspace, fullPath)
         .split(path.sep)
-        .join("/");
+        .join('/');
 
-      if (relPath === "snapshot.json") continue;
+      if (relPath === 'snapshot.json') continue;
 
       if (item.isDirectory()) {
-        entries.push({ path: relPath, type: "directory" });
+        entries.push({ path: relPath, type: 'directory' });
         await walk(fullPath);
       } else if (item.isFile()) {
         const st = await fs.promises.stat(fullPath);
         const data = await fs.promises.readFile(fullPath);
         entries.push({
           path: relPath,
-          type: "file",
+          type: 'file',
           size: st.size,
-          content: data.toString("base64"),
+          content: data.toString('base64'),
         });
       }
     }
@@ -47,7 +47,7 @@ const snapshot = async () => {
     entries,
   };
 
-  const outPath = path.join(process.cwd(), "snapshot.json");
+  const outPath = path.join(process.cwd(), 'snapshot.json');
   await fs.promises.writeFile(outPath, JSON.stringify(snapshotObj, null, 2));
 
   console.log(`Snapshot successfully saved!`);

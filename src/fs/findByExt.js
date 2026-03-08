@@ -2,7 +2,7 @@ import { promises as fs } from 'fs';
 import path from 'path';
 const findByExt = async () => {
   try {
-    const root = 'workspace';
+    const root = path.join(path.resolve(), 'workspace');
 
     const args = process.argv.slice(2);
     const ext = `.${args[args.indexOf('--ext') + 1] ?? 'txt'}`;
