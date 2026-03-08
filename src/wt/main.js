@@ -28,7 +28,6 @@ function kWayMerge(arrays) {
 }
 
 const main = async () => {
-  // Считываем массив чисел из data.json
   const filePath = join(process.cwd(), 'src', 'wt', 'data.json');
   const raw = await readFile(filePath, 'utf-8');
   const data = JSON.parse(raw);
